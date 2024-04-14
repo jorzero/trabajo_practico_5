@@ -14,7 +14,14 @@ Para ejecutar esta API localmente, necesitas tener Python instalado en tu sistem
 
 pip install fastapi uvicorn pydantic
 
+pip install email-validator
+
+pip install "pydantic[email]"
+
+
 uvicorn main:app --reload
+
+
 
 
 ### Puntos clave:
