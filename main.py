@@ -4,8 +4,8 @@ from pydantic import BaseModel, EmailStr
 import uuid
 
 app = FastAPI(
-    title="APIs en clase de Mlops 5",
-    version="0.0.1"
+    title="APIs trabajo en casa Mlops 5",
+    version="0.0.2"
 )
 
 
@@ -47,3 +47,18 @@ async def register_user(user: UserRegister):
         },
         status_code=status.HTTP_201_CREATED
     )
+
+
+@app.get("/user/{user_id}")
+async def get_user(user_id: str):
+    # Comprobamos si el usuario existe
+    if user_id in users:
+        return JSONResponse(
+            content=users[user_id],
+            status_code=status.HTTP_200_OK
+        )
+    else:
+        return JSONResponse(
+            content={"message": "Usuario no encontrado."},
+            status_code=status.HTTP_404_NOT_FOUND
+        )
