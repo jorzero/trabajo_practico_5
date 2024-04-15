@@ -5,7 +5,7 @@ import uuid
 
 app = FastAPI(
     title="APIs trabajo en casa Mlops 5",
-    version="0.0.3"
+    version="0.0.4"
 )
 
 
@@ -62,3 +62,10 @@ async def create_task(task: TaskCreate):
         content={"message": "Tarea creada exitosamente.", "task_id": task_id},
         status_code=status.HTTP_201_CREATED
     )
+
+@app.get("/tasks/{user_id}")
+async def list_tasks_by_user(user_id: str):
+    if user_id not in users:
+        return JSONResponse(content={"message": "Usuario no encontrado."}, status_code=status.HTTP_404_NOT_FOUND)
+    user_tasks = [task for task_id, task in tasks.items() if task['owner'] == user_id]
+    return JSONResponse(content={"tasks": user_tasks}, status_code=status.HTTP_200_OK)
